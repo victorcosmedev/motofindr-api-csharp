@@ -10,6 +10,11 @@ namespace MotoFindrAPI.Presentation.Controllers
     {
         private readonly IPatioApplicationService _service;
 
+        public PatioController(IPatioApplicationService service)
+        {
+            _service = service;
+        }
+
         [HttpPost]
         public IActionResult Salvar([FromBody] PatioEntity entity)
         {

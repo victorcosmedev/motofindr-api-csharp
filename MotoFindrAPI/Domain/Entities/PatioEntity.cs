@@ -11,6 +11,7 @@ namespace MotoFindrAPI.Domain.Entities
         [Required]
         public double Comprimento { get; set; }
         public List<SecaoEntity>? Secoes { get; set; }
+        public int VagasRestantes => Secoes?.Sum(secao => secao.VagasRestantes) ?? 0;
 
         public int RepartirVagas()
         {

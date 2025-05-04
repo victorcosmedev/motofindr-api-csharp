@@ -32,7 +32,7 @@ namespace MotoFindrAPI.Presentation.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> BuscarMotoPorId(int id)
+        public async Task<IActionResult> BuscarMotoPorId([FromRoute] int id)
         {
             try
             {

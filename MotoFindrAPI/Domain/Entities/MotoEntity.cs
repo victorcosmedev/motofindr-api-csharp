@@ -9,6 +9,6 @@
         public string corMoto { get; set; } = string.Empty;
         public MotoqueiroEntity? motoqueiro { get; set; }
         public int VagaId { get; set; }
-        public VagaEntity Vaga { get; set; }
+        public VagaEntity? Vaga { get; set; }
     }
 }

@@ -8,7 +8,7 @@ namespace MotoFindrAPI.Infrastructure.Data.Repositories
 {
     public class PatioRepository : IPatioRepository
     {
-        ApplicationContext _context;
+        private readonly ApplicationContext _context;
         public PatioRepository(ApplicationContext context)
         {
             _context = context;

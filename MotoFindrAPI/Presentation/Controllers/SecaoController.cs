@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MotoFindrAPI.Application.DTOs;
 using MotoFindrAPI.Application.Interfaces;
 using MotoFindrAPI.Domain.Entities;
 
 namespace MotoFindrAPI.Presentation.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class SecaoController : ControllerBase
     {
         private readonly ISecaoApplicationService _secaoService;

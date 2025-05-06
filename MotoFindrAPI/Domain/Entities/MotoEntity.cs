@@ -1,7 +1,12 @@
-﻿namespace MotoFindrAPI.Domain.Entities
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace MotoFindrAPI.Domain.Entities
 {
+    [Table("tb_mf_moto")]
     public class MotoEntity
     {
+        [Key]
         public int Id { get; set; }
         public string nomeMoto { get; set; } = string.Empty;
         public string modeloMoto { get; set; } = string.Empty;

@@ -1,5 +1,4 @@
-﻿using MotoFindrAPI.Application.DTOs;
-using MotoFindrAPI.Domain.Entities;
+﻿using MotoFindrAPI.Domain.Entities;
 
 namespace MotoFindrAPI.Application.Interfaces
 {

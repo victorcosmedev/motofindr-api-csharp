@@ -1,4 +1,6 @@
-﻿namespace MotoFindrAPI.Domain.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace MotoFindrAPI.Domain.Entities
 {
     public class MotoqueiroEntity : UserEntity
     {

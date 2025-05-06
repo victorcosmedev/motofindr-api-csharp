@@ -4,8 +4,8 @@ using MotoFindrAPI.Domain.Entities;
 
 namespace MotoFindrAPI.Presentation.Controllers
 {
-    [Route("[controller]")]
     [ApiController]
+    [Route("[controller]")]
     public class PatioController: ControllerBase
     {
         private readonly IPatioApplicationService _service;

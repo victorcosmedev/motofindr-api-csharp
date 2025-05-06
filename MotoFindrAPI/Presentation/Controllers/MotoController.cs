@@ -5,6 +5,8 @@ using Oracle.EntityFrameworkCore.Query.Internal;
 
 namespace MotoFindrAPI.Presentation.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class MotoController : ControllerBase
     {   
         private readonly IMotoApplicationService _motoService;

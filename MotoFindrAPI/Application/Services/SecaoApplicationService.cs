@@ -1,5 +1,4 @@
-﻿using MotoFindrAPI.Application.DTOs;
-using MotoFindrAPI.Application.Interfaces;
+﻿using MotoFindrAPI.Application.Interfaces;
 using MotoFindrAPI.Domain.Entities;
 using MotoFindrAPI.Domain.Interfaces;
 
@@ -16,10 +15,10 @@ namespace MotoFindrAPI.Application.Services
         }
         public async Task<SecaoEntity> SalvarAsync(SecaoEntity secao)
         {
-
             var patio = await _patioRepository.BuscarPorIdAsync(secao.PatioId);
             if (patio == null)
                 throw new Exception("Pátio não encontrado.");
+            secao.Patio = patio;
             
             try
             {

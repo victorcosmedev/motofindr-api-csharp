@@ -10,7 +10,7 @@ namespace MotoFindrAPI.Domain.Entities
         [Key]
         public int IdVaga { get; set; }
         public int SecaoId { get; set; }
-        [JsonIgnore]
+        public int MotoId { get; set; }
         public MotoEntity? Moto { get; set; }
         [JsonIgnore]
         public SecaoEntity? Secao {  get; set; }

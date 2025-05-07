@@ -9,7 +9,7 @@ namespace MotoFindrAPI.Application.Services
     {
         private readonly IMotoRepository _motoRepository;
         private readonly IVagaRepository _vagaRepository;
-        private readonly IMotoqueiroRepository _motoqueiroRepository
+        private readonly IMotoqueiroRepository _motoqueiroRepository;
         public MotoApplicationService(IMotoRepository motoRepository, IVagaRepository vagaRepository, IMotoqueiroRepository motoqueiroRepository)
         {
             _motoRepository = motoRepository;
@@ -18,7 +18,7 @@ namespace MotoFindrAPI.Application.Services
         }
         public Task<MotoEntity> SalvarAsync(MotoDTO dto)
         {
-
+            
         }
         public Task<bool> AtualizarMotoAsync(int id, MotoEntity moto)
         {
@@ -56,16 +56,19 @@ namespace MotoFindrAPI.Application.Services
         }
         private MotoEntity MapToEntity(MotoDTO dto)
         {
-            var motoqueiro = _motoqueir
-
             var moto = new MotoEntity();
             MotoEntity motoEntity = new MotoEntity();
             motoEntity.Id = dto.Id;
+            motoEntity.NomeMoto = dto.NomeMoto;
             motoEntity.ModeloMoto = dto.ModeloMoto;
             motoEntity.AnoMoto = dto.AnoMoto;
             motoEntity.CorMoto = dto.CorMoto;
-            
+            motoEntity.MotoqueiroId = dto.MotoqueiroId;
+            motoEntity.Motoqueiro = null;
+            motoEntity.VagaId = dto.VagaId;
+            motoEntity.Vaga = null;
 
+            return motoEntity;
         }
     }
 }

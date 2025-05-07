@@ -27,11 +27,11 @@ namespace MotoFindrAPI.Application.Services
         }
         public async Task<MotoEntity> SalvarAsync(MotoDTO dto)
         {
-            MotoEntity entity = _mapper.Map<MotoEntity>(dto);
             try
             {
-                entity = await AtribuirVaga(entity);
-                entity = await AtribuirMotoqueiro(entity);
+                var entity = _mapper.Map<MotoEntity>(dto);
+                entity.Vaga = await AtribuirVaga(entity);
+                entity.Motoqueiro = await AtribuirMotoqueiro(entity);
 
                 return await _motoRepository.SalvarAsync(entity);    
             }
@@ -74,26 +74,11 @@ namespace MotoFindrAPI.Application.Services
             var motoOcupandoAVaga = vaga.Moto;
             return motoOcupandoAVaga != null && motoOcupandoAVaga.Id != moto.Id;
         }
-        private MotoEntity MapToEntity(MotoDTO dto)
-        {
-            var moto = new MotoEntity();
-            MotoEntity motoEntity = new MotoEntity();
-            motoEntity.Id = dto.Id;
-            motoEntity.NomeMoto = dto.NomeMoto;
-            motoEntity.ModeloMoto = dto.ModeloMoto;
-            motoEntity.AnoMoto = dto.AnoMoto;
-            motoEntity.CorMoto = dto.CorMoto;
-            motoEntity.MotoqueiroId = dto.MotoqueiroId;
-            motoEntity.Motoqueiro = null;
-            motoEntity.VagaId = dto.VagaId;
-            motoEntity.Vaga = null;
 
-            return motoEntity;
-        }
-        private async Task<MotoEntity> AtribuirVaga(MotoEntity moto)
+        private async Task<VagaEntity?> AtribuirVaga(MotoEntity moto)
         {
             if (moto.VagaId == null)
-                throw new Exception("Esta vaga não existe");
+                return null;
 
             var vaga = await _vagaRepository.BuscarPorIdAsync((int)moto.VagaId);
             if (vaga == null)
@@ -101,10 +86,10 @@ namespace MotoFindrAPI.Application.Services
 
             if (moto.Id != vaga.MotoId)
                 throw new Exception("Esta vaga já está ocupada por outra moto");
-            moto.Vaga = vaga;
-            return moto;
+
+            return vaga;
         }
-        private async Task<MotoEntity> AtribuirMotoqueiro(MotoEntity moto)
+        private async Task<MotoqueiroEntity?> AtribuirMotoqueiro(MotoEntity moto)
         {
             if (moto.MotoqueiroId != null)
             {
@@ -113,10 +98,9 @@ namespace MotoFindrAPI.Application.Services
                 {
                     throw new Exception("Este motoqueiro já tem outra moto associada a ele.");
                 }
-
-                moto.Motoqueiro = motoqueiro;
+                return motoqueiro;
             }
-            return moto;
+            return null;
         }
     }
 }

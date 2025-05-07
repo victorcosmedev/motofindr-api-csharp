@@ -6,7 +6,7 @@ namespace MotoFindrAPI.Domain.Interfaces
     {
         Task<IEnumerable<MotoEntity>> BuscarTodasAsync();
         Task<MotoEntity?> BuscarPorIdAsync(int id);
-        Task<MotoEntity> SalvarAsync(MotoEntity patio);
+        Task<MotoEntity> SalvarAsync(MotoEntity moto);
         Task<bool> AtualizarAsync(int id, MotoEntity moto);
         Task<bool> DeletarAsync(int id);
     }

@@ -1,4 +1,5 @@
-﻿using MotoFindrAPI.Application.Interfaces;
+﻿using MotoFindrAPI.Application.DTOs;
+using MotoFindrAPI.Application.Interfaces;
 using MotoFindrAPI.Domain.Entities;
 using MotoFindrAPI.Domain.Interfaces;
 
@@ -6,22 +7,21 @@ namespace MotoFindrAPI.Application.Services
 {
     public class MotoApplicationService : IMotoApplicationService
     {
-        private readonly IMotoRepository _repository;
-        public MotoApplicationService(IMotoRepository repository)
+        private readonly IMotoRepository _motoRepository;
+        private readonly IVagaRepository _vagaRepository;
+        private readonly IMotoqueiroRepository _motoqueiroRepository
+        public MotoApplicationService(IMotoRepository motoRepository, IVagaRepository vagaRepository, IMotoqueiroRepository motoqueiroRepository)
         {
-            _repository = repository;
+            _motoRepository = motoRepository;
+            _vagaRepository = vagaRepository;
+            _motoqueiroRepository = motoqueiroRepository;
+        }
+        public Task<MotoEntity> SalvarAsync(MotoDTO dto)
+        {
+
         }
         public Task<bool> AtualizarMotoAsync(int id, MotoEntity moto)
         {
-            //if(MotoqueiroPossuiOutraMoto(moto))
-            //    throw new InvalidOperationException("Este motoqueiro já possui uma moto associada a ele.");
-            //if (VagaJaEstaPreenchida(moto))
-            //    throw new InvalidOperationException("Esta vaga já está ocupada");
-
-            //try
-            //{
-            //    var sucesso = 
-            //}
             throw new NotImplementedException();
         }
 
@@ -40,10 +40,6 @@ namespace MotoFindrAPI.Application.Services
             throw new NotImplementedException();
         }
 
-        public Task<MotoEntity> SalvarAsync(MotoEntity patio)
-        {
-            throw new NotImplementedException();
-        }
 
         private bool MotoqueiroPossuiOutraMoto(MotoEntity moto)
         {
@@ -57,6 +53,19 @@ namespace MotoFindrAPI.Application.Services
             var vaga = moto.Vaga;
             var motoOcupandoAVaga = vaga.Moto;
             return motoOcupandoAVaga != null && motoOcupandoAVaga.Id != moto.Id;
+        }
+        private MotoEntity MapToEntity(MotoDTO dto)
+        {
+            var motoqueiro = _motoqueir
+
+            var moto = new MotoEntity();
+            MotoEntity motoEntity = new MotoEntity();
+            motoEntity.Id = dto.Id;
+            motoEntity.ModeloMoto = dto.ModeloMoto;
+            motoEntity.AnoMoto = dto.AnoMoto;
+            motoEntity.CorMoto = dto.CorMoto;
+            
+
         }
     }
 }

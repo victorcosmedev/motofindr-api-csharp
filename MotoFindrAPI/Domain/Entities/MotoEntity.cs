@@ -8,11 +8,12 @@ namespace MotoFindrAPI.Domain.Entities
     {
         [Key]
         public int Id { get; set; }
-        public string nomeMoto { get; set; } = string.Empty;
-        public string modeloMoto { get; set; } = string.Empty;
-        public int anoMoto { get; set; }
-        public string corMoto { get; set; } = string.Empty;
-        public MotoqueiroEntity? motoqueiro { get; set; }
+        public string NomeMoto { get; set; } = string.Empty;
+        public string ModeloMoto { get; set; } = string.Empty;
+        public int AnoMoto { get; set; }
+        public string CorMoto { get; set; } = string.Empty;
+        public int MotoqueiroId { get; set; }
+        public MotoqueiroEntity? Motoqueiro { get; set; }
         public int VagaId { get; set; }
         public VagaEntity? Vaga { get; set; }
     }

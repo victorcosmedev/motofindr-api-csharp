@@ -1,4 +1,5 @@
-﻿using MotoFindrAPI.Domain.Entities;
+﻿using MotoFindrAPI.Application.DTOs;
+using MotoFindrAPI.Domain.Entities;
 
 namespace MotoFindrAPI.Application.Interfaces
 {
@@ -6,7 +7,7 @@ namespace MotoFindrAPI.Application.Interfaces
     {
         Task<IEnumerable<MotoEntity>> BuscarTodasMotosAsync();
         Task<MotoEntity?> BuscarMotoPorIdAsync(int id);
-        Task<MotoEntity> SalvarAsync(MotoEntity patio);
+        Task<MotoEntity> SalvarAsync(MotoDTO dto);
         Task<bool> AtualizarMotoAsync(int id, MotoEntity moto);
         Task<bool> DeletarMotoAsync(int id);
     }

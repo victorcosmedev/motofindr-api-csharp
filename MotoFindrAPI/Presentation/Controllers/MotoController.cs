@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MotoFindrAPI.Application.DTOs;
 using MotoFindrAPI.Application.Interfaces;
 using MotoFindrAPI.Domain.Entities;
 using Oracle.EntityFrameworkCore.Query.Internal;
@@ -15,6 +16,20 @@ namespace MotoFindrAPI.Presentation.Controllers
         {
             _motoService = motoService;
             _secaoService = secaoService;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SalvarMoto(MotoDTO entity)
+        {
+            try
+            {
+                var moto = _motoService.SalvarAsync(entity);
+                return Ok(moto);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet]
@@ -43,20 +58,6 @@ namespace MotoFindrAPI.Presentation.Controllers
                 return Ok(moto);
             }
             catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> SalvarMoto(MotoEntity entity)
-        {
-            try
-            {
-                var moto = _motoService.SalvarAsync(entity);
-                return Ok(moto);
-            }
-            catch(Exception ex)
             {
                 return BadRequest(ex.Message);
             }

@@ -5,10 +5,10 @@ namespace MotoFindrAPI.Application.Interfaces
 {
     public interface IMotoApplicationService
     {
-        Task<IEnumerable<MotoEntity>> BuscarTodasMotosAsync();
-        Task<MotoEntity?> BuscarMotoPorIdAsync(int id);
-        Task<MotoEntity> SalvarAsync(MotoDTO dto);
-        Task<bool> AtualizarMotoAsync(int id, MotoEntity moto);
+        Task<IEnumerable<MotoDTO>> BuscarTodasMotosPorPatioAsync();
+        Task<MotoDTO?> BuscarMotoPorIdAsync(int id);
+        Task<MotoDTO> SalvarAsync(MotoDTO dto);
+        Task<bool> AtualizarMotoAsync(int id, MotoDTO moto);
         Task<bool> DeletarMotoAsync(int id);
     }
 }

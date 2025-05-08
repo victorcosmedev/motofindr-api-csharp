@@ -12,7 +12,6 @@ namespace MotoFindrAPI.Domain.Entities
         public int SecaoId { get; set; }
         public int MotoId { get; set; }
         public MotoEntity? Moto { get; set; }
-        [JsonIgnore]
         public SecaoEntity? Secao {  get; set; }
         public int NumeroVaga { get; set; }
         public bool Disponivel { get; set; }

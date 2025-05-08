@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
+using Microsoft.Extensions.Logging.Abstractions;
 using MotoFindrAPI.Application.DTOs;
 using MotoFindrAPI.Application.Interfaces;
 using MotoFindrAPI.Domain.Entities;
@@ -40,41 +41,40 @@ namespace MotoFindrAPI.Application.Services
                 throw;
             }
         }
-        public Task<bool> AtualizarMotoAsync(int id, MotoEntity moto)
+        public async Task<bool> AtualizarMotoAsync(int id, MotoDTO dto)
         {
-            throw new NotImplementedException();
-        }
+            try
+            {
+                var entity = _mapper.Map<MotoEntity>(dto);
+                entity.Vaga = await AtribuirVaga(entity);
+                entity.Motoqueiro = await AtribuirMotoqueiro(entity);
 
-        public Task<MotoEntity?> BuscarMotoPorIdAsync(int id)
+                return await _motoRepository.AtualizarAsync(id, entity);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+        public async Task<MotoDTO?> BuscarMotoPorIdAsync(int id)
         {
-            throw new NotImplementedException();
-        }
+            var entity = await _motoRepository.BuscarPorIdAsync(id);
+            if (entity == null)
+                return null;
 
-        public Task<IEnumerable<MotoEntity>> BuscarTodasMotosAsync()
+            var motoDTO = _mapper.Map<MotoDTO>(entity);
+            return motoDTO;
+        }
+        public async Task<IEnumerable<MotoDTO>> BuscarTodasMotosPorPatioAsync()
         {
-            throw new NotImplementedException();
+            var motos = await _motoRepository.BuscarTodasAsync();
+            var motosDTO = motos.Select(x => _mapper.Map<MotoDTO>(x));
+            return motosDTO;
         }
-
-        public Task<bool> DeletarMotoAsync(int id)
+        public async Task<bool> DeletarMotoAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _motoRepository.DeletarAsync(id);
         }
-
-
-        private bool MotoqueiroPossuiOutraMoto(MotoEntity moto)
-        {
-            var motoqueiro = moto.Motoqueiro;
-            var motoDoMotoqueiro = motoqueiro != null ? motoqueiro.Moto : null;
-            return motoDoMotoqueiro != null && motoDoMotoqueiro.Id != moto.Id;
-        }
-
-        private bool VagaJaEstaPreenchida(MotoEntity moto)
-        {
-            var vaga = moto.Vaga;
-            var motoOcupandoAVaga = vaga.Moto;
-            return motoOcupandoAVaga != null && motoOcupandoAVaga.Id != moto.Id;
-        }
-
         private async Task<VagaEntity?> AtribuirVaga(MotoEntity moto)
         {
             if (moto.VagaId == null)

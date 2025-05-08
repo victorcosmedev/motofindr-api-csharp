@@ -19,28 +19,12 @@ namespace MotoFindrAPI.Presentation.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SalvarMoto(MotoDTO entity)
+        public async Task<IActionResult> SalvarMoto(MotoDTO dto)
         {
             try
             {
-                var moto = _motoService.SalvarAsync(entity);
+                var moto = _motoService.SalvarAsync(dto);
                 return Ok(moto);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> BuscarTodasMotos()
-        {
-            try
-            {
-                var motos = await _motoService.BuscarTodasMotosAsync();
-                if (motos == null || !motos.Any())
-                    return NoContent();
-                return Ok(motos);
             }
             catch (Exception ex)
             {
@@ -64,7 +48,7 @@ namespace MotoFindrAPI.Presentation.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> AtualizarMoto(int id, MotoEntity moto)
+        public async Task<IActionResult> AtualizarMoto(int id, MotoDTO moto)
         {
             try
             {

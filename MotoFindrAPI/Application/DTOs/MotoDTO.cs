@@ -1,6 +1,6 @@
 ﻿namespace MotoFindrAPI.Application.DTOs
 {
-    public class MotoDTO
+    public record MotoDTO
     {
         public int Id { get; set; }
         public string NomeMoto { get; set; } = string.Empty;

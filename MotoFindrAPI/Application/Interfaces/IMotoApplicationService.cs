@@ -10,5 +10,6 @@ namespace MotoFindrAPI.Application.Interfaces
         Task<MotoDTO> SalvarAsync(MotoDTO dto);
         Task<bool> AtualizarMotoAsync(int id, MotoDTO moto);
         Task<bool> DeletarMotoAsync(int id);
+        Task<IEnumerable<MotoDTO>> BuscarTodasMotosPorSecaoAsync(int secaoId);
     }
 }

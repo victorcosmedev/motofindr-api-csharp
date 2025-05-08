@@ -26,7 +26,7 @@ namespace MotoFindrAPI.Application.Services
             _motoqueiroRepository = motoqueiroRepository;
             _mapper = mapper;
         }
-        public async Task<MotoEntity> SalvarAsync(MotoDTO dto)
+        public async Task<MotoDTO> SalvarAsync(MotoDTO dto)
         {
             try
             {
@@ -34,7 +34,8 @@ namespace MotoFindrAPI.Application.Services
                 entity.Vaga = await AtribuirVaga(entity);
                 entity.Motoqueiro = await AtribuirMotoqueiro(entity);
 
-                return await _motoRepository.SalvarAsync(entity);    
+                entity = await _motoRepository.SalvarAsync(entity);
+                return _mapper.Map<MotoDTO>(entity);
             }
             catch (Exception ex)
             {
@@ -65,9 +66,15 @@ namespace MotoFindrAPI.Application.Services
             var motoDTO = _mapper.Map<MotoDTO>(entity);
             return motoDTO;
         }
-        public async Task<IEnumerable<MotoDTO>> BuscarTodasMotosPorPatioAsync()
+        public async Task<IEnumerable<MotoDTO>> BuscarTodasMotosPorSecaoAsync(int secaoId)
         {
-            var motos = await _motoRepository.BuscarTodasAsync();
+            var motos = await _motoRepository.BuscarTodasPorSecaoAsync(secaoId);
+            var motosDTO = motos.Select(x => _mapper.Map<MotoDTO>(x));
+            return motosDTO;
+        }
+        public async Task<IEnumerable<MotoDTO>> BuscarTodasMotosPorPatioAsync(int patioId)
+        {
+            var motos = await _motoRepository.BuscarTodasPorPatioAsync(patioId);
             var motosDTO = motos.Select(x => _mapper.Map<MotoDTO>(x));
             return motosDTO;
         }
@@ -75,6 +82,7 @@ namespace MotoFindrAPI.Application.Services
         {
             return await _motoRepository.DeletarAsync(id);
         }
+
         private async Task<VagaEntity?> AtribuirVaga(MotoEntity moto)
         {
             if (moto.VagaId == null)
@@ -102,5 +110,6 @@ namespace MotoFindrAPI.Application.Services
             }
             return null;
         }
+
     }
 }

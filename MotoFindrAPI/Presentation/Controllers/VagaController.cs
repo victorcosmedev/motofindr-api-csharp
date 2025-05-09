@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MotoFindrAPI.Application.DTOs;
 using MotoFindrAPI.Application.Interfaces;
+using MotoFindrAPI.Utils;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace MotoFindrAPI.Presentation.Controllers
 {
@@ -15,7 +17,14 @@ namespace MotoFindrAPI.Presentation.Controllers
             _vagaApplicationService = vagaApplicationService;
         }
 
-        [HttpGet]
+        [HttpGet("por-secao")]
+        [SwaggerOperation(
+            Summary = ApiDoc.BuscarVagasPorSecaoSummary,
+            Description = ApiDoc.BuscarVagasPorSecaoDescription
+        )]
+        [SwaggerResponse(StatusCodes.Status200OK, "Vagas encontradas", typeof(List<VagaDTO>))]
+        [SwaggerResponse(StatusCodes.Status204NoContent, "Nenhuma vaga encontrada para esta seção")]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Parâmetro inválido ou erro no processamento")]
         public async Task<IActionResult> BuscarTodasVagasPorSecao([FromQuery] int secaoId)
         {
             try
@@ -32,7 +41,14 @@ namespace MotoFindrAPI.Presentation.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("por-patio")]
+        [SwaggerOperation(
+            Summary = ApiDoc.BuscarVagasPorPatioSummary,
+            Description = ApiDoc.BuscarVagasPorPatioDescription
+        )]
+        [SwaggerResponse(StatusCodes.Status200OK, "Vagas encontradas", typeof(List<VagaDTO>))]
+        [SwaggerResponse(StatusCodes.Status204NoContent, "Nenhuma vaga encontrada para este pátio")]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Parâmetro inválido ou erro no processamento")]
         public async Task<IActionResult> BuscarTodasVagasPorPatio([FromQuery] int patioId)
         {
             try
@@ -49,6 +65,13 @@ namespace MotoFindrAPI.Presentation.Controllers
         }
 
         [HttpGet("{id}")]
+        [SwaggerOperation(
+            Summary = ApiDoc.BuscarVagaPorIdSummary,
+            Description = ApiDoc.BuscarVagaPorIdDescription
+        )]
+        [SwaggerResponse(StatusCodes.Status200OK, "Vaga encontrada", typeof(VagaDTO))]
+        [SwaggerResponse(StatusCodes.Status404NotFound, "Vaga não encontrada")]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Parâmetro inválido ou erro no processamento")]
         public async Task<IActionResult> BuscarVagaPorId(int id)
         {
             try
@@ -65,6 +88,12 @@ namespace MotoFindrAPI.Presentation.Controllers
         }
 
         [HttpPost]
+        [SwaggerOperation(
+            Summary = ApiDoc.SalvarVagaSummary,
+            Description = ApiDoc.SalvarVagaDescription
+        )]
+        [SwaggerResponse(StatusCodes.Status200OK, "Vaga cadastrada com sucesso", typeof(VagaDTO))]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Dados inválidos ou erro no processamento")]
         public async Task<IActionResult> SalvarVaga([FromBody] VagaDTO dto)
         {
             try
@@ -79,6 +108,12 @@ namespace MotoFindrAPI.Presentation.Controllers
         }
         
         [HttpPut("{id}")]
+        [SwaggerOperation(
+            Summary = ApiDoc.AtualizarVagaSummary,
+            Description = ApiDoc.AtualizarVagaDescription
+        )]
+        [SwaggerResponse(StatusCodes.Status200OK, "Vaga atualizada com sucesso")]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Dados inválidos ou erro no processamento")]
         public async Task<IActionResult> AtualizarVaga(int id, [FromBody] VagaDTO dto)
         {
             try
@@ -95,6 +130,12 @@ namespace MotoFindrAPI.Presentation.Controllers
         }
 
         [HttpDelete("{id}")]
+        [SwaggerOperation(
+            Summary = ApiDoc.DeletarVagaSummary,
+            Description = ApiDoc.DeletarVagaDescription
+        )]
+        [SwaggerResponse(StatusCodes.Status200OK, "Vaga removida com sucesso")]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Erro no processamento da requisição")]
         public async Task<IActionResult> DeletarVaga(int id)
         {
             try

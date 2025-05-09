@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MotoFindrAPI.Application.Interfaces;
 using MotoFindrAPI.Domain.Entities;
+using MotoFindrAPI.Utils;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace MotoFindrAPI.Presentation.Controllers
 {
@@ -16,6 +18,12 @@ namespace MotoFindrAPI.Presentation.Controllers
         }
 
         [HttpPost]
+        [SwaggerOperation(
+            Summary = ApiDoc.SalvarPatioSummary,
+            Description = ApiDoc.SalvarPatioDescription
+        )]
+        [SwaggerResponse(StatusCodes.Status200OK, "Pátio cadastrado com sucesso", typeof(PatioEntity))]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Dados inválidos ou erro no processamento")]
         public IActionResult Salvar([FromBody] PatioEntity entity)
         {
             try
@@ -29,6 +37,13 @@ namespace MotoFindrAPI.Presentation.Controllers
         }
 
         [HttpGet]
+        [SwaggerOperation(
+            Summary = ApiDoc.BuscarTodosPatiosSummary,
+            Description = ApiDoc.BuscarTodosPatiosDescription
+        )]
+        [SwaggerResponse(StatusCodes.Status200OK, "Lista de pátios retornada com sucesso", typeof(List<PatioEntity>))]
+        [SwaggerResponse(StatusCodes.Status204NoContent, "Nenhum pátio cadastrado")]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Erro no processamento da requisição")]
         public async Task<IActionResult> BuscarTodosPatios()
         {
             try
@@ -46,6 +61,13 @@ namespace MotoFindrAPI.Presentation.Controllers
         }
 
         [HttpGet("{id}")]
+        [SwaggerOperation(
+            Summary = ApiDoc.BuscarPatioPorIdSummary,
+            Description = ApiDoc.BuscarPatioPorIdDescription
+        )]
+        [SwaggerResponse(StatusCodes.Status200OK, "Pátio encontrado", typeof(PatioEntity))]
+        [SwaggerResponse(StatusCodes.Status404NotFound, "Pátio não encontrado")]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Parâmetro inválido ou erro no processamento")]
         public async Task<IActionResult> BuscarPorId(int id)
         {
             try
@@ -64,6 +86,13 @@ namespace MotoFindrAPI.Presentation.Controllers
         }
 
         [HttpPut("{id}")]
+        [SwaggerOperation(
+            Summary = ApiDoc.AtualizarPatioSummary,
+            Description = ApiDoc.AtualizarPatioDescription
+        )]
+        [SwaggerResponse(StatusCodes.Status204NoContent, "Pátio atualizado com sucesso")]
+        [SwaggerResponse(StatusCodes.Status404NotFound, "Pátio não encontrado para atualização")]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Dados inválidos ou erro no processamento")]
         public async Task<IActionResult> AtualizarPatio(int id, [FromBody] PatioEntity entity)
         {
             try
@@ -81,6 +110,13 @@ namespace MotoFindrAPI.Presentation.Controllers
         }
 
         [HttpDelete("{id}")]
+        [SwaggerOperation(
+            Summary = ApiDoc.DeletarPatioSummary,
+            Description = ApiDoc.DeletarPatioDescription
+        )]
+        [SwaggerResponse(StatusCodes.Status200OK, "Pátio removido com sucesso", typeof(bool))]
+        [SwaggerResponse(StatusCodes.Status404NotFound, "Pátio não encontrado para exclusão")]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Erro no processamento da requisição")]
         public async Task<IActionResult> DeletarPatio(int id)
         {
             try

@@ -88,7 +88,7 @@ namespace MotoFindrAPI.Application.Services
             if (moto.VagaId == null)
                 return null;
 
-            var vaga = await _vagaRepository.BuscarPorIdAsync((int)moto.VagaId);
+            var vaga = await _vagaRepository.BuscarVagaPorIdAsync((int)moto.VagaId);
             if (vaga == null)
                 throw new Exception("Esta vaga não existe");
 

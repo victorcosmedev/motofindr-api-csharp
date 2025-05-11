@@ -2,11 +2,15 @@
 
 namespace MotoFindrAPI.Domain.Entities
 {
-        public class MotoqueiroEntity : UserEntity
+        public class MotoqueiroEntity
         {
+            public int Id { get; set; }
+            public string NomeUser { get; set; } = string.Empty;
+            public DateTime DataAniversarioUser { get; set; }
+            public string CpfUser { get; set; } = string.Empty;
             public int MotoId { get; set; }
             public MotoEntity? Moto { get; set; }
             public string Cnh { get; set; } = string.Empty;
-            public EnderecoEntity? Endereco { get; set; }
+            public string? Endereco { get; set; }
         }
 }
